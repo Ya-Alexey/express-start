@@ -1,21 +1,13 @@
 import { Router } from "express";
-import { books } from "../store/book.js";
-import { upload } from '../middleware/file.js';
+import { books } from "../../store/book.js";
+import { upload } from '../../middleware/file.js';
 
 const router = Router();
 
 router.get('/', (req, res) => {
-    res.render('books/index', { 
-        title: 'Book | index',
-        books: books,
-    })
+    res.json(books)
 });
-
-router.get('/create', (req, res) => {
-    res.render('books/create', { title: 'Book | create' })
-});
-
-router.post('/create', upload.single('bookfile'),  (req, res) => {
+router.post('/', upload.single('book-file'), (req, res) => {
     const { title } = req.body;
     const file = req.file;
 
@@ -30,10 +22,10 @@ router.post('/create', upload.single('bookfile'),  (req, res) => {
             authors: "",
             favorite: "",
             fileCover: "",
-            // fileName: file.filename,
+            fileName: file.filename,
         }
         books.push(newBook);
-        res.redirect(`/books/${newBook.id}`);
+        res.status(201).json(newBook);
     }
 });
 
@@ -43,45 +35,30 @@ router.get('/:id', (req, res) => {
     if (!book) {
         res.status(404).json('Not found')
     } else {
-        res.render('books/view', {
-            title: 'Book | view',
-            book: book,
-        })
+        res.json(book)
     }
 });
 
-router.get('/:id/edit', (req, res) => {
+router.put('/:id', (req, res) => {
     const { id } = req.params;
-    const book = books.find(item => item.id == id);
-    if (!book) {
-        res.status(404).json('Not found')
-    } else {
-        res.render('books/edit', {
-            title: 'Book | edit',
-            book: book,
-        })
-    }
-});
-router.post('/:id/edit', (req, res) => {
-    const { id } = req.params;
-    const { title } = req.body;
+    const updateData = req.body;
     const book = books.find(item => item.id == id);
     if (!book) {
         res.status(404).json('Not found');
     } else {
-        book.title = title;
-        res.redirect(`/books/${book.id}`);
+        Object.assign(book, updateData);
+        res.json(book)
     }
 });
 
-router.post('/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const { id } = req.params;
     const bookIdx = books.findIndex(item => item.id == id);
     if (bookIdx == -1) {
         res.status(404).json('Not found');
     } else {
         books.splice(bookIdx, 1)
-        res.redirect('/books');
+        res.json('success');
     }
 });
 

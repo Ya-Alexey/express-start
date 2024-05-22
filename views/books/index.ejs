@@ -1,0 +1,32 @@
+<%- include('../layout/default_start', { title: title, books: books }) %>
+    <% books.forEach(function(book){ %>
+        <div class="card">
+            <div class="card-content">
+                <div class="content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>title</td>
+                                <td><%= book.title %></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="/books/<%= book.id %>" class="card-footer-item">Open</a>
+                <!-- <a href="#" class="card-footer-item">Edit</a> -->
+                <!-- <form action="" method="delete">
+                    <a href="#" class="card-footer-item">Delete</a>
+                </form> -->
+            </footer>
+        </div>
+    <% }); %>
+    <a href="/books/create" class="button">Create book</a>
+<%- include('../layout/default_end') %>

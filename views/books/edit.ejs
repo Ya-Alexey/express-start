@@ -1,0 +1,13 @@
+<%- include('../layout/default_start', { title: title, book: book }) %>
+    <form method="post" >
+        <div class="field">
+            <label class="label">title</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Text input" name="title"
+                value="<%= book.title %>"
+              >
+            </div>
+        </div>
+        <button type="submit" class="button">Save book</button>
+    </form>
+<%- include('../layout/default_end') %>

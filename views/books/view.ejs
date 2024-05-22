@@ -1,0 +1,48 @@
+<%- include('../layout/default_start', { title: title, book: book }) %>
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>title</td>
+                            <td><%= book.title %></td>
+                        </tr>
+                        <tr>
+                            <td>description</td>
+                            <td><%= book.description %></td>
+                        </tr>
+                        <tr>
+                            <td>authors</td>
+                            <td><%= book.authors %></td>
+                        </tr>
+                        <tr>
+                            <td>favorite</td>
+                            <td><%= book.favorite %></td>
+                        </tr>
+                        <tr>
+                            <td>fileCover</td>
+                            <td><%= book.fileCover %></td>
+                        </tr>
+                        <tr>
+                            <td>fileName</td>
+                            <td><%= book.fileName %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="card-footer">
+            <a href="<%= book.id %>/edit" class="card-footer-item">Edit</a>
+            <form method="post">
+                <button type="submit" class="card-footer-item button">Delete</button>
+            </form>
+        </footer>
+    </div>
+<%- include('../layout/default_end') %>
